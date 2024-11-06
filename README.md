@@ -19,6 +19,6 @@ This is the B-end of the Asset Inventory Management project. It is a simple web 
 
 ```
 cd server
-python3 venv/bin/activate
+source venv/bin/activate
 pip3 install -r requirements.txt
 ```
