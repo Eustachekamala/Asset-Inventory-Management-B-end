@@ -1,17 +1,18 @@
-from flask import jsonify
-from app import app, db
+from flask import Blueprint, jsonify
 from models import User
 
-@app.route('/', methods=['GET'])
+routes_bp = Blueprint('routes', __name__)
+
+@routes_bp.route('/', methods=['GET'])
 def get_api():
     return jsonify({'message': 'Welcome to the API!'})
 
-@app.route('/api/users', methods=['GET'])
+@routes_bp.route('/api/users', methods=['GET'])
 def get_users():
     users = User.query.all()
     return jsonify([user.serialize for user in users])
 
-@app.route('/api/users/<int:user_id>', methods=['GET'])
+@routes_bp.route('/api/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(user_id)
     return jsonify(user.serialize)
