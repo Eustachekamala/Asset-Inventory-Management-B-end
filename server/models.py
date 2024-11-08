@@ -36,6 +36,7 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.Enum(UserRole), nullable=False)
     email = db.Column(db.String(255), nullable=False)
+    image_path = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
@@ -61,7 +62,7 @@ class Asset(db.Model):
     description = db.Column(db.Text)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     status = db.Column(db.Enum(AssetStatus), nullable=False)
-    image_url = db.Column(db.Text)
+    image_path = db.Column(db.String(255), nullable=False)
     allocated_to = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
@@ -127,11 +128,11 @@ class Request(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'asset_id': self.asset_id,
-            'request_type': self.request_type,
+            'request_type': self.request_type.value,
             'reason': self.reason,
             'quantity': self.quantity,
-            'urgency': self.urgency,
-            'status': self.status,
+            'urgency': self.urgency.value,
+            'status': self.status.value,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
