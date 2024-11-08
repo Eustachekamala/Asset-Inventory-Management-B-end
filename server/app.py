@@ -26,7 +26,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your_jwt_secret_key')  # Use a strong key
 
 # Initialize the database and migration
-db.init_app(app)  # Initialize db with the app
+db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
@@ -87,8 +87,9 @@ def register():
     password = data.get('password')
     role = data.get('role')
     email = data.get('email')
+    image_path = data.get('image_path')
 
-    if not username or not password or not role or not email:
+    if not username or not password or not role or not email or not image_path:
         return jsonify({'msg': 'Missing required fields'}), 400
 
     # Check if user already exists
@@ -100,7 +101,7 @@ def register():
     hashed_password = generate_password_hash(password)
 
     # Create a new user
-    new_user = User(username=username, password=hashed_password, role=role, email=email)
+    new_user = User(username=username, password=hashed_password, role=role, email=email, image_path=image_path)
     db.session.add(new_user)
 
     try:
@@ -250,6 +251,5 @@ def show_users():
         for user in users:
             print(user.serialize)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
