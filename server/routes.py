@@ -18,3 +18,4 @@ def get_user(user_id):
     if user is None:
         return jsonify({'error': 'User not found'}), 404
     return jsonify(user.serialize)
+

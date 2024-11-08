@@ -127,11 +127,11 @@ class Request(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'asset_id': self.asset_id,
-            'request_type': self.request_type,
+            'request_type': self.request_type.value,
             'reason': self.reason,
             'quantity': self.quantity,
-            'urgency': self.urgency,
-            'status': self.status,
+            'urgency': self.urgency.value,
+            'status': self.status.value,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
